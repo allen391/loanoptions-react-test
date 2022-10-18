@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'antd';
 import ListItem from './List';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUniList, addItem, deleteItem } from '../../shared/slices/uni-slice';
+import { AppDispatch } from '../../shared/slices/store';
 
 const UniversityList = () => {
-  const [uniList] = useState([]);
+  // @ts-ignore
+  const uniList = useSelector((state) => state.uni.data);
+  const dispatch = useDispatch<AppDispatch>();
   const handleLoad = () => {
-    console.log('load');
+    dispatch(
+      getUniList({
+        endpoint: 'search',
+        config: {
+          data: {
+            country: 'Australia',
+          },
+        },
+      }),
+    );
   };
 
   const handleDelete = () => {
-    console.log('delete');
+    dispatch(deleteItem());
   };
 
   const handleAdd = () => {
-    console.log('add');
+    dispatch(addItem());
   };
+
   return (
     <Wrapper>
       <ButtonWrapper>
@@ -40,7 +55,6 @@ const Wrapper = styled.div`
 
 const ButtonWrapper = styled.div`
   margin-bottom: 20px;
-  align-items: center;
 `;
 
 const SpacedButton = styled(Button)`
