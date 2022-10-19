@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from 'antd';
+import { Button, Spin } from 'antd';
 import ListItem from './List';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUniList, addItem, deleteItem } from '../../shared/slices/uni-slice';
@@ -8,6 +8,7 @@ import { AppDispatch, RootState } from '../../shared/slices/store';
 
 const UniversityList = () => {
   const uniList = useSelector((state: RootState) => state.uni.data);
+  const loading = useSelector((state: RootState) => state.uni.loading);
   const dispatch = useDispatch<AppDispatch>();
   const handleLoad = () => {
     dispatch(
@@ -43,6 +44,7 @@ const UniversityList = () => {
           Add
         </SpacedButton>
       </ButtonWrapper>
+      {loading && <CenteredSpin size="large" />}
       <ListItem uniList={uniList} />
     </Wrapper>
   );
@@ -50,10 +52,18 @@ const UniversityList = () => {
 
 const Wrapper = styled.div`
   padding: 50px;
+  position: relative;
 `;
 
 const ButtonWrapper = styled.div`
   margin-bottom: 20px;
+`;
+
+const CenteredSpin = styled(Spin)`
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  z-index: 10000;
 `;
 
 const SpacedButton = styled(Button)`
