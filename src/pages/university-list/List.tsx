@@ -58,7 +58,7 @@ const columns: ColumnsType<IUniItem> = [
 ];
 
 const ListItem = ({ uniList }: IUniProps) => {
-  return <Table dataSource={uniList} columns={columns} />;
+  return <Table dataSource={uniList} columns={columns} rowKey={(record) => record.name} />;
 };
 
 export default ListItem;
