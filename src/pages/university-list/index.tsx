@@ -4,11 +4,10 @@ import { Button } from 'antd';
 import ListItem from './List';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUniList, addItem, deleteItem } from '../../shared/slices/uni-slice';
-import { AppDispatch } from '../../shared/slices/store';
+import { AppDispatch, RootState } from '../../shared/slices/store';
 
 const UniversityList = () => {
-  // @ts-ignore
-  const uniList = useSelector((state) => state.uni.data);
+  const uniList = useSelector((state: RootState) => state.uni.data);
   const dispatch = useDispatch<AppDispatch>();
   const handleLoad = () => {
     dispatch(
